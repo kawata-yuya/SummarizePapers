@@ -9,13 +9,12 @@ def main():
     summarizer = PaperSummarizer(model_name="fast_test", temperature=0.2)
 
     workspace_dir = Path(__file__).parent
+    pdf_files = list(workspace_dir.glob('papers/*.pdf'))
 
-    for pdf_file in workspace_dir.glob('papers/*.pdf'):
+    for pdf_file in tqdm(pdf_files, desc="Summarizing papers", unit="file"):
 
-        print(f"Summarizing {pdf_file.name} and saving the summary...")
-        summary = summarizer.summarize_paper(pdf_file)
-        print(f"\n--- Summary {pdf_file.name} (printed to console) ---")
-        print(summary)
+        tqdm.write(f"Summarizing {pdf_file.name} and saving the summary...")
+        _ = summarizer.summarize_paper(pdf_file)
 
 
 
