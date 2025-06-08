@@ -1,4 +1,6 @@
-/papers
-/output
+/papers/*
+/output/*
+!/papers/.gitkeep
+!/output/.gitkeep
 /vertex
 /gemini_api_key.json
