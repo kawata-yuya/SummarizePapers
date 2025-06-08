@@ -4,3 +4,4 @@
 !/output/.gitkeep
 /vertex
 /gemini_api_key.json
+__pycache__

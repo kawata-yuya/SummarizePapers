@@ -4,6 +4,7 @@ import pathlib
 import json
 import uuid # UUIDモジュールを追加
 import os   # OSモジュールを追加
+from datetime import datetime
 
 class PaperSummarizer:
     """
@@ -17,7 +18,6 @@ class PaperSummarizer:
     }
     _API_KEY_FILE = './gemini_api_key.json'
     _PROMPT_FILE = './prompt.txt'
-    _OUTPUT_DIR = 'output' # 出力ディレクトリを追加
 
     def __init__(self, model_name: str = "fast_test", temperature: float = 0.2):
         """
@@ -36,8 +36,10 @@ class PaperSummarizer:
         self._prompt = self._load_prompt()
         self._client = genai.Client(api_key=self._api_key)
 
+        now_str = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        self._output_dir = f'output/{now_str}' # 出力ディレクトリを追加
         # 出力ディレクトリが存在しない場合は作成
-        os.makedirs(self._OUTPUT_DIR, exist_ok=True)
+        os.makedirs(self._output_dir, exist_ok=True)
 
     def _load_api_key(self) -> str:
         """Loads the API key from the specified JSON file."""
@@ -94,13 +96,13 @@ class PaperSummarizer:
             # UUID5 を生成し、ファイル名を決定
             # ファイルパスを名前空間として使用し、常に同じファイルからは同じUUIDが生成される
             namespace = uuid.NAMESPACE_URL
-            uid = uuid.uuid5(namespace, filepath)
+            uid = uuid.uuid5(namespace, filepath.name)
             summary_filename = f"{uid}.md"
-            output_filepath = os.path.join(self._OUTPUT_DIR, summary_filename)
+            output_filepath = os.path.join(self._output_dir, summary_filename)
 
             # Markdownファイルとして保存
             with open(output_filepath, 'w', encoding='utf-8') as f:
-                f.write(f"{uid}\n\n---\n\n")
+                f.write(f"uuid: {uid}\nfilename: {filepath.name}\n\n---\n\n")
                 f.write(summary_text)
 
             print(f"Summary saved to: {output_filepath}")
