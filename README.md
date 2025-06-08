@@ -29,7 +29,7 @@
 まず、このリポジトリをあなたのローカル環境にクローンします。
 
 ```bash
-git clone https://github.com/kawata-yuya/SummarizePapers.git # あなたのリポジトリURLに置き換えてください
+git clone https://github.com/kawata-yuya/SummarizePapers.git
 cd SummarizePapers
 ```
 
