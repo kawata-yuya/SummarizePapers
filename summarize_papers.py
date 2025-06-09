@@ -13,6 +13,7 @@ class PaperSummarizer:
 
     _MODELS = {
         "2.5_flash": "gemini-2.5-flash-preview-05-20",
+        "2.5_pro": "gemini-2.5-pro-preview-06-05",
         "test": "gemini-2.0-flash",
         "fast_test": "gemini-2.0-flash-lite",
     }
