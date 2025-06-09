@@ -38,8 +38,10 @@ class PaperSummarizer:
 
         now_str = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         self._output_dir = f'output/{now_str}' # 出力ディレクトリを追加
+        self._move_pdf_dir = f'output/{now_str}/pdf' # 出力ディレクトリを追加
         # 出力ディレクトリが存在しない場合は作成
         os.makedirs(self._output_dir, exist_ok=True)
+        os.makedirs(self._move_pdf_dir, exist_ok=True)
 
     def _load_api_key(self) -> str:
         """Loads the API key from the specified JSON file."""
@@ -59,7 +61,7 @@ class PaperSummarizer:
         except FileNotFoundError:
             raise FileNotFoundError(f"Prompt file not found at {self._PROMPT_FILE}")
 
-    def summarize_paper(self, filepath: str) -> str:
+    def summarize_paper(self, filepath: pathlib.Path) -> str:
         """
         Summarizes a PDF paper using the configured Gemini model and saves it to a Markdown file.
 
@@ -106,6 +108,10 @@ class PaperSummarizer:
                 f.write(summary_text)
 
             print(f"Summary saved to: {output_filepath}")
+
+            pdf_new_path = pathlib.Path(self._move_pdf_dir) / pdf_path.name
+            pdf_path.rename(pdf_new_path)
+
             return summary_text
         except Exception as e:
             raise Exception(f"An error occurred during summarization or file saving: {e}")
