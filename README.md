@@ -78,10 +78,10 @@ cd SummarizePapers
 要約したいPDFファイルを `papers/` ディレクトリに配置し、以下のスクリプトを実行します。
 
 ```bash
-python your_main_script_name.py # 例: python summarize.py
+python app.py
 ```
 
-`your_main_script_name.py` は、`PaperSummarizer` クラスをインスタンス化して `summarize_paper` メソッドを呼び出すスクリプトです（例として提供した `if __name__ == "__main__":` ブロックのようなコードが含まれるファイル）。
+`app.py` は、`papers/`に配置してあるPDFファイルを要約するスクリプトが入っています。
 
 要約されたテキストは `output/` ディレクトリに、PDFファイルパスに基づいて生成されたUUID5をファイル名とするMarkdownファイルとして保存されます。
 
