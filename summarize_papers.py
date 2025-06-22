@@ -104,7 +104,7 @@ class PaperSummarizer:
 
             # Markdownファイルとして保存
             with open(output_filepath, 'w', encoding='utf-8') as f:
-                f.write(f"uuid: {uid}\nfilename: {filepath.name}\n\n---\n\n")
+                f.write(f"<!--\nuuid: {uid}\nfilename: {filepath.name}\nmodel_name: {self.model_name}\n-->\n\n")
                 f.write(summary_text)
 
             print(f"Summary saved to: {output_filepath}")
