@@ -1,0 +1,6 @@
+# Please check the models' name for this program
+# at the following link: 
+# https://ai.google.dev/gemini-api/docs/models
+
+model_name: gemini-2.5-flash
+temperature: 0.2                    # 0.0 to 2.0

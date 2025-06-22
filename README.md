@@ -71,6 +71,14 @@ cd SummarizePapers
 
     `YOUR_YOUR_GEMINI_API_KEY_HERE` の部分を、あなたの実際のAPIキーに置き換えてください。
 
+### モデルの選択と`temperature`(温度)の設定
+
+Gemini APIのAIモデルを選択し、温度などのパラメータを設定するため、[`config/setting.yaml`](./config/setting.yaml)を開き、ご自身の利用に合わせた設定を行ってください。
+
+なお、AIモデル名は[こちら](https://ai.google.dev/gemini-api/docs/models)を参照してください。
+
+現在は、`app.py`でYamlを読み込んでいますが、今後 `summarize_papers.py`ライブラリ内での読み込みという仕様に変更予定です。
+
 -----
 
 ## 使い方

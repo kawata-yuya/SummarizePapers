@@ -11,25 +11,23 @@ class PaperSummarizer:
     A class to summarize PDF research papers using the Google Gemini API and save summaries.
     """
 
-    _MODELS = {
-        "2.5_flash": "gemini-2.5-flash-preview-05-20",
-        "2.5_pro": "gemini-2.5-pro-preview-06-05",
-        "test": "gemini-2.0-flash",
-        "fast_test": "gemini-2.0-flash-lite",
-    }
+    # _MODELS = {
+    #     "2.5_flash": "gemini-2.5-flash-preview-05-20",
+    #     "2.5_pro": "gemini-2.5-pro-preview-06-05",
+    #     "test": "gemini-2.0-flash",
+    #     "fast_test": "gemini-2.0-flash-lite",
+    # }
     _API_KEY_FILE = './gemini_api_key.json'
     _PROMPT_FILE = './prompt.txt'
 
-    def __init__(self, model_name: str = "fast_test", temperature: float = 0.2):
+    def __init__(self, model_name: str, temperature: float = 0.2):
         """
         Initializes the PaperSummarizer with a specific Gemini model and generation configuration.
 
         Args:
-            model_name (str): The key for the model to use from the _MODELS dictionary.
+            model_name (str): Use ai model's name.
             temperature (float): Controls the randomness of the output.
         """
-        if model_name not in self._MODELS:
-            raise ValueError(f"Invalid model name: '{model_name}'. Available models are: {list(self._MODELS.keys())}")
 
         self.model_name = model_name
         self.temperature = temperature
@@ -82,7 +80,7 @@ class PaperSummarizer:
 
         try:
             response = self._client.models.generate_content(
-                model=self._MODELS[self.model_name],
+                model=self.model_name,
                 contents=[
                     types.Part.from_bytes(
                         data=pdf_path.read_bytes(),
