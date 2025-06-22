@@ -90,6 +90,7 @@ class PaperSummarizer:
                 ],
                 config=types.GenerateContentConfig(
                     temperature=self.temperature,
+                    thinking_config=types.ThinkingConfig(thinking_budget=-1),
                 )
             )
             summary_text = response.text
