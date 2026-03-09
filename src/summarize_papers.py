@@ -18,7 +18,7 @@ class PaperSummarizer:
     #     "fast_test": "gemini-2.0-flash-lite",
     # }
     _API_KEY_FILE = './gemini_api_key.json'
-    _PROMPT_FILE = './prompt.txt'
+    _PROMPT_FILE = '/app/config/prompt.txt'
 
     def __init__(self, model_name: str, temperature: float = 0.2):
         """
