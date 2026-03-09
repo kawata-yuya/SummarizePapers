@@ -3,7 +3,7 @@ from tqdm import tqdm
 from pathlib import Path
 import yaml
 
-from summarize_papers import PaperSummarizer
+from app.summarize_papers import PaperSummarizer
 
 def main():
     workspace_dir = Path(__file__).parent
