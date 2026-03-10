@@ -5,6 +5,7 @@ import json
 import uuid # UUIDモジュールを追加
 import os   # OSモジュールを追加
 from datetime import datetime
+import shutil
 
 class PaperSummarizer:
     """
@@ -112,7 +113,7 @@ class PaperSummarizer:
             print(f"Summary saved to: {output_filepath}")
 
             pdf_new_path = pathlib.Path(self._move_pdf_dir) / pdf_path.name
-            pdf_path.rename(pdf_new_path)
+            shutil.copy2(pdf_path, pdf_new_path)
 
             return summary_text
         except Exception as e:
