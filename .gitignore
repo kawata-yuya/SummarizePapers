@@ -5,3 +5,4 @@
 /vertex
 /gemini_api_key.json
 __pycache__
+.env

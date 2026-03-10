@@ -5,6 +5,7 @@ import json
 import uuid # UUIDモジュールを追加
 import os   # OSモジュールを追加
 from datetime import datetime
+import shutil
 
 class PaperSummarizer:
     """
@@ -17,21 +18,31 @@ class PaperSummarizer:
     #     "test": "gemini-2.0-flash",
     #     "fast_test": "gemini-2.0-flash-lite",
     # }
-    _API_KEY_FILE = './gemini_api_key.json'
-    _PROMPT_FILE = './prompt.txt'
+    _PROMPT_FILE = '/app/config/prompt.txt'
 
-    def __init__(self, model_name: str, temperature: float = 0.2):
+    def __init__(self,
+                 api_key: str,
+                 model_name: str,
+                 temperature: float,
+                 top_p: float,
+                 top_k: int,
+                 ):
         """
         Initializes the PaperSummarizer with a specific Gemini model and generation configuration.
 
         Args:
+            api_key: GEMINI_API_KEY
             model_name (str): Use ai model's name.
             temperature (float): Controls the randomness of the output.
+            top_p (float): The nucleus sampling probability.
+            top_k (int): The number of highest probability tokens to keep for top-k sampling.
         """
 
         self.model_name = model_name
         self.temperature = temperature
-        self._api_key = self._load_api_key()
+        self.top_p = top_p
+        self.top_k = top_k
+        self._api_key = api_key
         self._prompt = self._load_prompt()
         self._client = genai.Client(api_key=self._api_key)
 
@@ -41,16 +52,6 @@ class PaperSummarizer:
         # 出力ディレクトリが存在しない場合は作成
         os.makedirs(self._output_dir, exist_ok=True)
         os.makedirs(self._move_pdf_dir, exist_ok=True)
-
-    def _load_api_key(self) -> str:
-        """Loads the API key from the specified JSON file."""
-        try:
-            with open(self._API_KEY_FILE, 'r') as f:
-                return json.load(f)['key']
-        except FileNotFoundError:
-            raise FileNotFoundError(f"API key file not found at {self._API_KEY_FILE}")
-        except KeyError:
-            raise KeyError(f"API key not found in {self._API_KEY_FILE}. Make sure it has a 'key' field.")
 
     def _load_prompt(self) -> str:
         """Loads the prompt text from the specified file."""
@@ -90,6 +91,8 @@ class PaperSummarizer:
                 ],
                 config=types.GenerateContentConfig(
                     temperature=self.temperature,
+                    topP=self.top_p,
+                    topK=self.top_k,
                     thinking_config=types.ThinkingConfig(thinking_budget=-1),
                 )
             )
@@ -110,7 +113,7 @@ class PaperSummarizer:
             print(f"Summary saved to: {output_filepath}")
 
             pdf_new_path = pathlib.Path(self._move_pdf_dir) / pdf_path.name
-            pdf_path.rename(pdf_new_path)
+            shutil.copy2(pdf_path, pdf_new_path)
 
             return summary_text
         except Exception as e:
