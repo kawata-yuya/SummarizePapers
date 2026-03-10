@@ -1,7 +1,6 @@
 from glob import glob
 from tqdm import tqdm
 from pathlib import Path
-import yaml
 import os
 
 from summarize_papers import PaperSummarizer
