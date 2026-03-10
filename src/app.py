@@ -4,7 +4,7 @@ from pathlib import Path
 import yaml
 import os
 
-from .summarize_papers import PaperSummarizer
+from summarize_papers import PaperSummarizer
 
 def main():
     
