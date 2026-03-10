@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+    image: gemini_summarize_papers # image名の指定
+    container_name: gemini_summarize_papers # container名の指定
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app
+      - ./data:/data
