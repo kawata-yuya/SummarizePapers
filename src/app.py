@@ -2,25 +2,21 @@ from glob import glob
 from tqdm import tqdm
 from pathlib import Path
 import yaml
+import os
 
-from app.summarize_papers import PaperSummarizer
+from .summarize_papers import PaperSummarizer
 
 def main():
-    workspace_dir = Path(__file__).parent
-    yaml_file_path = workspace_dir / "config/setting.yaml"
-
-    settings = yaml.load(open(yaml_file_path), Loader=yaml.FullLoader)
-
-    if not(  isinstance(settings.get('model_name'), str) and 
-            (isinstance(settings.get('temperature'), float) or isinstance(settings.get('temperature'), int))):
-        raise ValueError("Invalid settings in the YAML file. Please check 'model_name' and 'temperature'.")
-    else:
-        model_name = settings.get('model_name')
-        temperature = settings.get('temperature')
     
-    summarizer = PaperSummarizer(model_name=model_name, temperature=temperature)
+    summarizer = PaperSummarizer(
+        api_key=os.getenv('GEMINI_API_KEY'),
+        model_name=os.getenv('GEMINI_MODEL'),
+        temperature=float(os.getenv('TEMPERATURE')),
+        top_p=float(os.getenv('TOP_P')),
+        top_k=int(os.getenv('TOP_K')),
+    )
 
-    pdf_files = list(workspace_dir.glob('papers/*.pdf'))
+    pdf_files = list(Path('/app').glob('papers/*.pdf'))
 
     for pdf_file in tqdm(pdf_files, desc="Summarizing papers", unit="file"):
 
