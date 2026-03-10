@@ -7,5 +7,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./app:/app
-      - ./data:/data
+      - ./config:/app/config 
+      - ./output:/app/output
+      - ./papers:/app/papers
