@@ -33,6 +33,8 @@ class PaperSummarizer:
             api_key: GEMINI_API_KEY
             model_name (str): Use ai model's name.
             temperature (float): Controls the randomness of the output.
+            top_p (float): The nucleus sampling probability.
+            top_k (int): The number of highest probability tokens to keep for top-k sampling.
         """
 
         self.model_name = model_name
