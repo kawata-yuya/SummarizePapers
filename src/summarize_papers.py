@@ -26,6 +26,7 @@ class PaperSummarizer:
                  temperature: float,
                  top_p: float,
                  top_k: int,
+                 thinking_budget: int,
                  ):
         """
         Initializes the PaperSummarizer with a specific Gemini model and generation configuration.
@@ -36,12 +37,14 @@ class PaperSummarizer:
             temperature (float): Controls the randomness of the output.
             top_p (float): The nucleus sampling probability.
             top_k (int): The number of highest probability tokens to keep for top-k sampling.
+            thinking_budget (int): The number of thinking tokens.
         """
 
         self.model_name = model_name
         self.temperature = temperature
         self.top_p = top_p
         self.top_k = top_k
+        self.thinking_budget = thinking_budget
         self._api_key = api_key
         self._prompt = self._load_prompt()
         self._client = genai.Client(api_key=self._api_key)
@@ -93,7 +96,7 @@ class PaperSummarizer:
                     temperature=self.temperature,
                     topP=self.top_p,
                     topK=self.top_k,
-                    thinking_config=types.ThinkingConfig(thinking_budget=-1),
+                    thinking_config=types.ThinkingConfig(thinking_budget=self.thinking_budget),
                 )
             )
             summary_text = response.text

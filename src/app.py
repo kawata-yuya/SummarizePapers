@@ -13,6 +13,7 @@ def main():
         temperature=float(os.getenv('TEMPERATURE')),
         top_p=float(os.getenv('TOP_P')),
         top_k=int(os.getenv('TOP_K')),
+        thinking_budget=int(os.getenv('THINKING_BUDGET')),
     )
 
     pdf_files = list(Path('/app').glob('papers/*.pdf'))
